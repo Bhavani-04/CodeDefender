@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CodeDefender History</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  
+
+  <!-- Header -->
+  <header class="header">
+    
+    <h1>🛡️ CodeDefender</h1>
+    <h2>📜 Analysis History</h2>
+<div id="historyContainer" class="history-list"></div>
+
+<div class="button-group">
+  <a href="index.html" class="btn">← Back to Analyzer</a>
+  <button onclick="downloadHistory()">⬇️ Download History</button>
+  <button onclick="clearHistory()">🗑️ Clear History</button>
+</div>
+  </header>
+
+  <table>
+  <thead>
+    <tr>
+      <th>Filename</th>
+      <th>Language</th>
+      <th>Issues</th>
+      <th>Severity</th>
+      <th>Time</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody id="historyTableBody"></tbody>
+</table>
+
+  <!-- History Panel -->
+  <section id="historyPanel"></section>
+
+  <!-- Footer -->
+
+
+  <script>
+    const path = window.location.pathname;
+    if (path.includes('history.html')) {
+      document.getElementById('nav-history').classList.add('active');
+    }
+
+    const history = JSON.parse(localStorage.getItem('analysisHistory') || '[]');
+    const panel = document.getElementById('historyPanel');
+    panel.innerHTML = '<h3>Analysis History</h3>';
+
+    if (history.length === 0) {
+      panel.innerHTML += '<p>No history available.</p>';
+    } else {
+      history.forEach((entry, index) => {
+        panel.innerHTML += `<div><strong>#${index + 1} - ${entry.file}</strong><br><em>${entry.timestamp}</em><pre>${entry.output}</pre></div><hr>`;
+      });
+    }
+    function formatTimestamp(raw) {
+    const date = new Date(raw);
+    return date.toLocaleString('en-IN', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+  }
+
+    function downloadHistory() {
+  const history = JSON.parse(localStorage.getItem('analysisHistory') || '[]');
+  if (history.length === 0) {
+    alert("No history to download.");
+    return;
+  }
+
+  let content = '';
+  history.forEach(entry => {
+    content += `File: ${entry.file}\n`;
+    content += `Timestamp: ${formatTimestamp(entry.timestamp)}\n`;
+    content += `Output:\n${entry.output}\n`;
+    content += `-----------------------------\n\n`;
+  });
+
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'CodeDefender_History.txt';
+  a.click();
+}
+
+    function clearHistory() {
+      localStorage.removeItem('analysisHistory');
+      panel.innerHTML = '<h3>Analysis History</h3><p>No history available.</p>';
+    }
+  </script>
+  <footer>
+    <p>
+      Powered by <strong>Bandit</strong> (Python Security) & <strong>ESLint</strong> (JavaScript Quality) — Secure your code before deployment.
+    </p>
+    <div class="tech-icons">
+      
+    </div>
+  </footer>
+</body>
+</html>

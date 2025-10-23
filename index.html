@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CodeDefender</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    
+    <h1>🛡️ CodeDefender</h1>
+    <p class="tagline">
+      Advanced static code analysis for Python and JavaScript.<br>
+      Detect security vulnerabilities and code quality issues before deployment.
+    </p>
+
+    <!-- Action Buttons -->
+<div class="button-group">
+  <button onclick="scrollToUpload()">🛡️ Analyze Code</button>
+  <a href="history.html" class="btn">🕘 History</a>
+</div>
+  </header>
+
+  <!-- Upload Section -->
+  <section class="upload-section">
+    <div class="drop-zone" id="dropZone">
+      <img src="upload.png"alt="" class="upload-icon">
+      <h2>Upload Code File for Analysis</h2>
+      <p>Drag & drop your Python (.py) or JavaScript (.js, .jsx, .ts, .tsx, .c, .cpp) files here</p>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="codefile" accept=".py,.js,.jsx,.ts,.tsx,.c,.cpp" hidden>
+        <button type="button" onclick="document.getElementById('fileInput').click()">Choose File</button>
+        <span id="languageBadge" class="lang-badge" style="display:none;"></span>
+        
+      </form>
+    </div>
+  </section>
+
+  <!-- Result Section -->
+  <section id="result"></section>
+  
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      Powered by <strong>Bandit</strong> (Python Security) & <strong>ESLint</strong> (JavaScript Quality) — Secure your code before deployment.
+    </p>
+    <div class="tech-icons">
+      
+    </div>
+  </footer>
+  <script> function scrollToUpload() {
+  document.querySelector('.upload-section').scrollIntoView({ behavior: 'smooth' });
+}</script>
+  <script src="script.js" defer></script>
+</body>
+</html>
